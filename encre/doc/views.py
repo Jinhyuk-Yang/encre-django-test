@@ -26,7 +26,13 @@ class MyIndicesView(GenericAPIView):
             return Response(
                 {
                     'msg': 'Id list of my documents',
-                    'indices': [doc.id for doc in doc_queryset]
+                    'indices': [
+                        {
+                            'id': doc.id,
+                            'writer': doc.writer.email if doc.writer is not None else None,
+                            'head': doc.head
+                        } for doc in doc_queryset
+                    ]
                 }, status=status.HTTP_200_OK
             )
         except Exception as e:
@@ -46,7 +52,13 @@ class DocView(GenericAPIView):
             return Response(
                 {
                     'msg': 'Id list of total documents',
-                    'indices': [doc.id for doc in doc_queryset]
+                    'indices': [
+                        {
+                            'id': doc.id,
+                            'writer': doc.writer.email if doc.writer is not None else None,
+                            'head': doc.head
+                        } for doc in doc_queryset
+                    ]
                 }, status=status.HTTP_200_OK
             )
         except Exception as e:
